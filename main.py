@@ -19,7 +19,7 @@ st.set_page_config(page_title="Toxic Comment Detector", page_icon="🛡️")
 
 st.title("🛡️ Toxic Comment Detector")
 
-text_input = st.text_area("Введите текст комментария:", height=120, placeholder="Type or paste a comment here...")
+text_input = st.text_area("Type your comment: ", height=120, placeholder="Type or paste a comment here...")
 
 threshold = st.slider(
     "Classification threshold (threshold)", min_value=0.0, max_value=1.0, value=0.5, step=0.01,
