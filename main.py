@@ -2,8 +2,7 @@ import streamlit as st
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import torch
 
-# Замени на свой репозиторий после push_to_hub, например: "ivanov/toxic-comment-distilbert"
-MODEL_NAME = "ЗАМЕНИ_НА_СВОЙ_USERNAME/toxic-comment-distilbert"
+MODEL_NAME = "haisassan/toxic-comment-distilbert"
 
 
 @st.cache_resource
@@ -19,19 +18,15 @@ model, tokenizer = load_model()
 st.set_page_config(page_title="Toxic Comment Detector", page_icon="🛡️")
 
 st.title("🛡️ Toxic Comment Detector")
-st.write(
-    "Модель на основе DistilBERT, дообученная (fine-tuned) на датасете "
-    "Jigsaw Toxic Comment Classification для определения токсичности комментариев."
-)
 
 text_input = st.text_area("Введите текст комментария:", height=120, placeholder="Type or paste a comment here...")
 
 threshold = st.slider(
-    "Порог классификации (threshold)", min_value=0.0, max_value=1.0, value=0.5, step=0.01,
-    help="Ниже порога — модель более чувствительна (выше recall). Выше порога — более консервативна (выше precision)."
+    "Classification threshold (threshold)", min_value=0.0, max_value=1.0, value=0.5, step=0.01,
+    help="Below the threshold, the model is more sensitive (higher recall). Above the threshold, it is more conservative (higher precision)."
 )
 
-if st.button("Проверить", type="primary"):
+if st.button("Check", type="primary"):
     if text_input.strip():
         inputs = tokenizer(text_input, return_tensors="pt", truncation=True, padding=True, max_length=128)
         with torch.no_grad():
@@ -39,26 +34,25 @@ if st.button("Проверить", type="primary"):
         probs = torch.softmax(outputs.logits, dim=1)
         toxic_prob = probs[0][1].item()
 
-        st.metric("Вероятность токсичности", f"{toxic_prob:.1%}")
+        st.metric("Toxic probability:", f"{toxic_prob:.1%}")
         st.progress(toxic_prob)
 
         if toxic_prob >= threshold:
-            st.error("⚠️ Комментарий классифицирован как токсичный")
+            st.error("⚠️ The comment has been classified as toxic")
         else:
-            st.success("✅ Комментарий не классифицирован как токсичный")
+            st.success("✅ The comment is not classified as toxic.")
     else:
-        st.warning("Введите текст для проверки")
+        st.warning("Write text to check")
 
-with st.expander("О проекте"):
+with st.expander("About project"):
     st.write(
         """
-        **Датасет:** Jigsaw Toxic Comment Classification Challenge (Kaggle)
+        **Dataset:** Jigsaw Toxic Comment Classification Challenge (Kaggle)
 
         **Baseline:** TF-IDF + Logistic Regression (class_weight='balanced')
 
-        **Финальная модель:** DistilBERT (fine-tuned), 2 эпохи на подвыборке 20 000 комментариев
+        **Final model:** DistilBERT (fine-tuned), 2 epochs
 
-        Из-за сильного дисбаланса классов (~10:1) в проекте отдельно исследован
-        trade-off между precision и recall, порог классификации настраивается вручную.
+        Due to a significant class imbalance (~10:1), the trade-off between precision and recall was specifically investigated in the project, and the classification threshold is adjusted manually.
         """
     )
