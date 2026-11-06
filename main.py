@@ -2,7 +2,7 @@ import streamlit as st
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import torch
 
-MODEL_NAME = "haisassan/toxic-comment-distilbert"
+MODEL_NAME = "haisassan/toxic-comments-distilbert-v4"
 
 
 @st.cache_resource
@@ -47,11 +47,11 @@ if st.button("Check", type="primary"):
 with st.expander("About project"):
     st.write(
         """
-        **Dataset:** Jigsaw Toxic Comment Classification Challenge (Kaggle)
+        **Dataset:** Jigsaw Toxic Comment Classification Challenge (Kaggle), and my own dataset
 
         **Baseline:** TF-IDF + Logistic Regression (class_weight='balanced')
 
-        **Final model:** DistilBERT (fine-tuned), 2 epochs
+        **Final model:** DistilBert with 5 epochs on Jigsaw Toxic Comment Classification and fine-tuning with hard examples on my own dataset with 3100 examples.
 
         Due to a significant class imbalance (~10:1), the trade-off between precision and recall was specifically investigated in the project, and the classification threshold is adjusted manually.
         """
