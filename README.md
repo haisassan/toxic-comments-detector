@@ -2,7 +2,8 @@
 
 A binary text-classification project that estimates whether an English-language comment is toxic. The project explores a traditional machine-learning baseline and a transformer-based model, then tests whether additional fine-tuning on difficult examples changes model behaviour.
 
-**Live demo:** https://toxic-comments-detector.streamlit.app/  
+**Live demo:** https://toxic-comments-detector.streamlit.app/
+**Colab Notebook:** https://colab.research.google.com/drive/1EAvNLMqV-nEerb5hJYaQvlTqm2YbhSK8?usp=sharing
 **Hugging Face model:**  
 - [DistilBERT after additional fine-tuning](https://huggingface.co/haisassan/toxic-comments-distilbert-v4)
 
@@ -67,8 +68,6 @@ A supplementary fine-tuning experiment was run on a separate collection of diffi
 | 3 | 0.000325 | 0.002521 | 0.998435 | 0.996416 |
 | 4 | 0.000220 | 0.002299 | 0.998435 | 0.996416 |
 
-![Additional fine-tuning metrics](assets/hard_examples_metrics.png)
-
 ![Additional fine-tuning loss](assets/hard_examples_training_loss.png)
 
 These numbers describe performance on that supplementary split only. They must not be compared directly with the Jigsaw metrics as if they were measured on the same test set. The additional examples are not an independent, human-annotated benchmark; very high scores on this split do not establish real-world generalization.
@@ -99,10 +98,6 @@ Enter an English comment to receive a predicted class and toxicity probability.
 ## Responsible use
 
 Use the model to prioritize comments for human review, not to automatically punish users or remove content without an appeal process. Keep a human moderator in the loop, monitor false positives and false negatives, and evaluate the model on data representative of the target community and language.
-
-## Repository contents
-
-The project notebook contains the experiments and training workflow. The `assets/` directory in this documentation package contains plots referenced above. The Streamlit application is hosted separately.
 
 ## Acknowledgements
 
