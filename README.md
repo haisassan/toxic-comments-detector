@@ -3,7 +3,9 @@
 A binary text-classification project that estimates whether an English-language comment is toxic. The project explores a traditional machine-learning baseline and a transformer-based model, then tests whether additional fine-tuning on difficult examples changes model behaviour.
 
 **Live demo:** https://toxic-comments-detector.streamlit.app/
+
 **Colab Notebook:** https://colab.research.google.com/drive/1EAvNLMqV-nEerb5hJYaQvlTqm2YbhSK8?usp=sharing
+
 **Hugging Face model:**  
 - [DistilBERT after additional fine-tuning](https://huggingface.co/haisassan/toxic-comments-distilbert-v4)
 
